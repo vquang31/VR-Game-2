@@ -1,0 +1,134 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ConstGame
+{
+    public const float MIN_GESTURE_SCORE = 0.8f;
+
+    public const float REMAINING_TIME_ORDER = 1000f;
+
+    public const int MAX_INVENTORY_SIZE = 20;
+    public const int MAX_QUANTITY_PER_ORDER = 5;
+    public const int MAX_ENHANCEMENT_LEVEL = 5;
+
+    public static int MIN_ITEM_VALUE
+    {
+        get
+        {
+            int minValue = int.MaxValue;
+            foreach (var value in baseValuesItem.Values)
+            {
+                if (value < minValue)
+                {
+                    minValue = value;
+                }
+            }
+            return minValue;
+        }
+    }
+    public static int MAX_ITEM_VALUE
+    {
+        get
+        {
+            int maxValue = int.MinValue;
+            foreach (var value in baseValuesItem.Values)
+            {
+                if (value > maxValue)
+                {
+                    maxValue = value;
+                }
+            }
+            return maxValue;
+        }
+    }
+
+
+    public static int MIN_ENHANCEMENT_VALUE
+    {
+        get
+        {
+            int minValue = int.MaxValue;
+            foreach (var value in enhancementValues.Values)
+            {
+                if (value < minValue)
+                {
+                    minValue = value;
+                }
+            }
+            return minValue;
+        }
+    }
+
+    public static int MAX_ENHANCEMENT_VALUE
+    {
+        get
+        {
+            int maxValue = int.MinValue;
+            foreach (var value in enhancementValues.Values)
+            {
+                if (value > maxValue)
+                {
+                    maxValue = value;
+                }
+            }
+            return maxValue;
+        }
+    }
+    public static ItemType GetRandomValidItemTypeByValue(int itemValue)
+    {
+        List<ItemType> validItemTypes = new();
+        foreach (var kvp in baseValuesItem)
+        {
+            if (kvp.Value <= itemValue)
+            {
+                validItemTypes.Add(kvp.Key);
+            }
+        }
+        if (validItemTypes.Count == 0)
+        {
+            Debug.LogWarning("No valid item types found for the given item value.");
+            return default;
+        }
+        int randomIndex = Random.Range(0, validItemTypes.Count);
+        return validItemTypes[randomIndex];
+    }
+
+    public static EnhancementType GetRandomValidEnhancementTypeByValue(int enhancementValue)
+    {
+        List<EnhancementType> validEnhancementTypes = new();
+        foreach (var kvp in enhancementValues)
+        {
+            if (kvp.Value <= enhancementValue)
+            {
+                validEnhancementTypes.Add(kvp.Key);
+            }
+        }
+        if (validEnhancementTypes.Count == 0)
+        {
+            Debug.LogWarning("No valid enhancement types found for the given enhancement value.");
+            return default;
+        }
+        int randomIndex = Random.Range(0, validEnhancementTypes.Count);
+        return validEnhancementTypes[randomIndex];
+    }
+
+
+    public static Dictionary<ItemType, int> baseValuesItem = new()
+    {
+        { ItemType.Sword, 100 },
+        { ItemType.Shield, 80 },
+        { ItemType.Potion, 50 },
+        { ItemType.Bow, 90 },
+        { ItemType.Armor, 120 },
+    };
+
+    public static Dictionary<EnhancementType, int> enhancementValues = new()
+    {
+        { EnhancementType.Damage, 50 },
+        { EnhancementType.Defense, 50 },
+        { EnhancementType.Health, 50 },
+        { EnhancementType.Speed, 50 },
+        { EnhancementType.Magic, 50 },
+    };
+
+}
