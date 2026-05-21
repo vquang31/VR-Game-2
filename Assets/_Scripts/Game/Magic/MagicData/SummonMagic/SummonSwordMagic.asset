@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: SummonSwordMagic
   m_EditorClassIdentifier: Assembly-CSharp::SummonMagicData
   magicName: Summon Sword
-  magicIcon: {fileID: 21300000, guid: d0eb15dd032187249984c45d5fbb6e54, type: 3}
+  magicIcon: {fileID: 21300000, guid: 984fed8660db8c9419f8a304a1c8d4e9, type: 3}
   description: 
   duration: 0
   cooldown: 0
-  shape: 0
-  summonPrefab: {fileID: 0}
+  shape: 3
+  summonPrefab: {fileID: 62576267820710444, guid: eba9791b07962884aa499937be83ae22, type: 3}
+  enhanceSummonPrefab: {fileID: 75286871294318643, guid: 44122fd31fe19f749b196a6d5289846b, type: 3}
   itemType: 0
   summonIcon: {fileID: 0}

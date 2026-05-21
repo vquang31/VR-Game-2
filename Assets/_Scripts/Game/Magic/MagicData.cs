@@ -14,7 +14,7 @@ public abstract class MagicData : ScriptableObject
     [Header("MagicIcon và Shape phải giống nhau")]
     [Tooltip("MagicIcon và Shape phải giống nhau")]
     public DetectorShape.Shape shape;// Hình dạng của phép thuật
-    
+
 }
 
 ///

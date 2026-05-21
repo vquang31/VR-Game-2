@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a00cde45b39e1894691831cf82057e8b, type: 3}
+  m_Name: SummonBowMagic
+  m_EditorClassIdentifier: Assembly-CSharp::SummonMagicData
+  magicName: Summon Crossbow
+  magicIcon: {fileID: 0}
+  description: 
+  duration: 0
+  cooldown: 0
+  shape: 0
+  summonPrefab: {fileID: 7452817453711105441, guid: 2ddef94e7e4606441a07223aa56244d9, type: 3}
+  enhanceSummonPrefab: {fileID: 745679232345332587, guid: 4a4057b9e02244c408af7bf58ec8d0f7, type: 3}
+  itemType: 3
+  summonIcon: {fileID: 0}

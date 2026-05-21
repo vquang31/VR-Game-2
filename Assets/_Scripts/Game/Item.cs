@@ -22,7 +22,7 @@ public class Item
     public int Value
     {
         get
-            {
+        {
             int baseValue = GetBaseValue(itemType);
             int enhancementValue = GetEnhancementValue(); // Each enhancement adds 10 to the value
             return baseValue + enhancementValue;
@@ -80,7 +80,7 @@ public enum ItemType
     Shield,
     Potion,
     Bow,
-    Armor,
+    Halberd,
 }
 
 public enum EnhancementType

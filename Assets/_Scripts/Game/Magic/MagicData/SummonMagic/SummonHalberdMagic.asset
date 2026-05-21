@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a00cde45b39e1894691831cf82057e8b, type: 3}
-  m_Name: SummonSwordMagic 2
+  m_Name: SummonHalberdMagic
   m_EditorClassIdentifier: Assembly-CSharp::SummonMagicData
-  magicName: Summon Sword
-  magicIcon: {fileID: 21300000, guid: d0eb15dd032187249984c45d5fbb6e54, type: 3}
+  magicName: Summon Halberd
+  magicIcon: {fileID: 0}
   description: 
   duration: 0
   cooldown: 0
-  shape: 0
-  summonPrefab: {fileID: 0}
-  itemType: 0
+  shape: 6
+  summonPrefab: {fileID: 1997559547947820013, guid: 2ae7f343e1469b34fa67738e3ea27b1d, type: 3}
+  enhanceSummonPrefab: {fileID: 8257220194600493219, guid: e9351a8a4b3eec244b1c9f8abadbb46a, type: 3}
+  itemType: 4
   summonIcon: {fileID: 0}

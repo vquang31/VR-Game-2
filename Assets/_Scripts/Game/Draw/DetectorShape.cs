@@ -125,7 +125,7 @@ public class DetectorShape : Singleton<DetectorShape>
 
 
 
-    public static Shape LabelToShape (string shape)
+    public static Shape LabelToShape(string shape)
     {
         if (string.IsNullOrEmpty(shape))
             return Shape.Unknown;
@@ -133,19 +133,24 @@ public class DetectorShape : Singleton<DetectorShape>
     }
     public enum Shape
     {
-        Square,
+        Star,
         Triangle,
         Circle,
         Z,
+        V,
         Time,
-        Star,
+        Wave,
         S,
+        Alpha,
+        Beta,
+        Delta,
+        Phi,
         Unknown
     }
 
     public static Dictionary<string, Shape> shapeToMagic = new()
     {
-        { "Square", Shape.Square},
+        { "Wave", Shape.Wave},
         { "Triangle", Shape.Triangle },
         { "Circle", Shape.Circle },
 

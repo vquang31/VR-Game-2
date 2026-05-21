@@ -9,7 +9,7 @@ public class ConstGame
 
     public const int MAX_INVENTORY_SIZE = 20;
     public const int MAX_QUANTITY_PER_ORDER = 5;
-    public const int MAX_ENHANCEMENT_LEVEL = 5;
+    public const int MAX_ENHANCEMENT_LEVEL = 2;
 
     public static int MIN_ITEM_VALUE
     {
@@ -115,11 +115,11 @@ public class ConstGame
 
     public static Dictionary<ItemType, int> baseValuesItem = new()
     {
+        { ItemType.Potion, 100 },
+        { ItemType.Shield, 100 },
         { ItemType.Sword, 100 },
-        { ItemType.Shield, 80 },
-        { ItemType.Potion, 50 },
-        { ItemType.Bow, 90 },
-        { ItemType.Armor, 120 },
+        { ItemType.Bow, 120 },
+        { ItemType.Halberd, 120 },
     };
 
     public static Dictionary<EnhancementType, int> enhancementValues = new()
