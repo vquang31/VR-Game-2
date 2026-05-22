@@ -11,6 +11,7 @@ public class ConstGame
     public const int MAX_QUANTITY_PER_ORDER = 5;
     public const int MAX_ENHANCEMENT_LEVEL = 2;
 
+    public const float SPAWN_ITEM_MODEL_DURATION = 10f;
     public static int MIN_ITEM_VALUE
     {
         get
@@ -124,11 +125,10 @@ public class ConstGame
 
     public static Dictionary<EnhancementType, int> enhancementValues = new()
     {
-        { EnhancementType.Damage, 50 },
-        { EnhancementType.Defense, 50 },
-        { EnhancementType.Health, 50 },
-        { EnhancementType.Speed, 50 },
-        { EnhancementType.Magic, 50 },
+        { EnhancementType.IncreaseSize, 60  },
+        { EnhancementType.Exchange, 100 },
+        { EnhancementType.YellowAura, 80 },
+        { EnhancementType.PurpleAura, 80 },
     };
 
 }

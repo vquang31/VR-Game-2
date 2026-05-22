@@ -49,10 +49,10 @@ public class OrderUI : NewMonoBehaviour
         // GameObject itemMagicIcon3GO = itemGO.transform.Find("MagicIcon3_Image").gameObject;
 
         List<GameObject> itemMagicIconGOs = new();
-        for (int i = 1; i <= 3; i++)
+        for (int j = 1; j <= 3; j++)
         {
             // string s =
-            GameObject gameObject = itemGO.transform.Find("MagicIcon" + i.ToString() + "_Image").gameObject;
+            GameObject gameObject = itemGO.transform.Find("MagicIcon" + j.ToString() + "_Image").gameObject;
             itemMagicIconGOs.Add(gameObject);
         }
 
@@ -60,21 +60,25 @@ public class OrderUI : NewMonoBehaviour
 
         itemIcon.sprite = summonMagicData.summonIcon;
 
-        itemMagicIconGOs[0].GetComponent<Image>().sprite = summonMagicData.magicIcon;
+        // itemMagicIconGOs[0].GetComponent<Image>().sprite = summonMagicData.magicIcon;
 
         List<EnhancementType> enhancementTypes = item.enhancements;
 
         List<EnhancementMagicData> enhancementMagicDatas = MagicPool.Instance.GetEnhancementMagicData(enhancementTypes);
 
-        for (int i = 0; i < enhancementMagicDatas.Count; i++)
+        int i = 0;
+        for (; i < enhancementMagicDatas.Count; i++)
         {
-            itemMagicIconGOs[i + 1].GetComponent<Image>().sprite = enhancementMagicDatas[i].magicIcon;
+            itemMagicIconGOs[i].GetComponent<Image>().sprite = enhancementMagicDatas[i].magicIcon;
+        }
+        itemMagicIconGOs[i].GetComponent<Image>().sprite = summonMagicData.magicIcon;
+
+        i++;
+        for (; i <= ConstGame.MAX_ENHANCEMENT_LEVEL + 1; i++)
+        {
+            itemMagicIconGOs[i].SetActive(false);
         }
 
-
     }
-
-
-
 
 }

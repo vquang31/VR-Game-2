@@ -85,9 +85,8 @@ public enum ItemType
 
 public enum EnhancementType
 {
-    Damage,
-    Defense,
-    Health,
-    Speed,
-    Magic,
+    IncreaseSize,
+    Exchange,
+    YellowAura,
+    PurpleAura,
 }

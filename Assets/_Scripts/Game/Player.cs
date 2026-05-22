@@ -7,13 +7,13 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class Player : Singleton<Player>
 {
-    public Order cart = new();
+    public Dictionary<Item, GameObject> cart = new();
 
     public List<EnhancementType> activeEnhancementMagic = new();
-    
+
     //private bool SummonMode = false;
-    
-    public List<Item> inventory = new();
+
+    public Dictionary<Item, GameObject> inventory = new();
 
     public CastStatus Cast(Result gestureResult)
     {
@@ -21,15 +21,15 @@ public class Player : Singleton<Player>
         Debug.Log($"Shape: {gestureResult.GestureClass} ,gesture: {shape} -- score: {gestureResult.Score}");
         if (gestureResult.Score < ConstGame.MIN_GESTURE_SCORE)
         {
-            return CastStatus.Failed ;
+            return CastStatus.Failed;
         }
         Magic magic = MagicManager.Instance.GetMagic(shape);
-        if(magic == null)
+        if (magic == null)
         {
             Debug.Log($"No magic found for gesture: {shape}");
             return CastStatus.Failed;
         }
-        if(magic.IsOnCooldown())
+        if (magic.IsOnCooldown())
         {
             Debug.Log($"Magic {shape} is on cooldown.");
             return CastStatus.Cooldown;
@@ -44,7 +44,7 @@ public class Player : Singleton<Player>
             case EnhancementMagic enhancementMagic:
                 //enhancementMagic.ApplyEnhancement(this);
                 //enhancementMagic.ApplyEnhancement(this);
-                if(!activeEnhancementMagic.Contains(enhancementMagic.EnhancementType))
+                if (!activeEnhancementMagic.Contains(enhancementMagic.EnhancementType))
                     activeEnhancementMagic.Add(enhancementMagic.EnhancementType);
                 break;
             case SummonMagic summonMagic:
@@ -64,12 +64,42 @@ public class Player : Singleton<Player>
     }
     public void AddItemToInventory(Item item)
     {
-        inventory.Add(item);
+        GameObject itemModel = SpawnModelManager.Instance.SpawnItemModel(item);
+        inventory.Add(item, itemModel);
     }
+
+
+
+    public Item itemTest;
+    [ContextMenu("Add Item To Cast Test")]
+    public void AddItemToCastTest()
+    {
+        AddItemToCart(itemTest);
+    }
+
+    [ContextMenu("Remove Item To Cast Test")]
+    public void RemoveItemToCastTest()
+    {
+        RemoveItemToCart(itemTest);
+    }
+
 
     public void AddItemToCart(Item item)
     {
-        cart.AddItem(item);
+        cart.Add(item, inventory[item]);
+        // Spawn Model + VFX
+        GameObject itemModel = inventory[item];
+        SpawnModelManager.Instance.SpawnItemToCart(item, itemModel);
+    }
+
+    public void RemoveItemToCart(Item item)
+    {
+        if (cart.ContainsKey(item))
+        {
+            GameObject itemModel = cart[item];
+            cart.Remove(item);
+            SpawnModelManager.Instance.DespawnItem(itemModel);
+        }
     }
 
 }

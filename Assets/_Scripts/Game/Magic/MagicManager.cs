@@ -76,4 +76,21 @@ public class MagicManager : Singleton<MagicManager>
         }
         return magicList.FirstOrDefault(m => m.MagicData.shape == shape);
     }
+
+
+    public GameObject GetItemModel(Item item)
+    {
+        SummonMagicData summonMagicData = MagicPool.Instance.magicDataList
+            .OfType<SummonMagicData>()
+            .FirstOrDefault(m => m.itemType == item.itemType);
+        if (item.enhancements.Contains(EnhancementType.Exchange))
+        {
+            return summonMagicData.enhanceSummonPrefab;
+        }
+        else
+        {
+            return summonMagicData.summonPrefab;
+        }
+    }
+
 }
