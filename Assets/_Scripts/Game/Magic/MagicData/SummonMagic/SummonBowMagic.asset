@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: SummonBowMagic
   m_EditorClassIdentifier: Assembly-CSharp::SummonMagicData
   magicName: Summon Crossbow
-  magicIcon: {fileID: 0}
-  description: 
+  magicIcon: {fileID: 21300000, guid: ca41f384376706342aae964c471f3207, type: 3}
+  description: Crossbow or arrow
   duration: 0
   cooldown: 0
-  shape: 0
+  shape: 3
   summonPrefab: {fileID: 7452817453711105441, guid: 2ddef94e7e4606441a07223aa56244d9, type: 3}
   enhanceSummonPrefab: {fileID: 745679232345332587, guid: 4a4057b9e02244c408af7bf58ec8d0f7, type: 3}
   itemType: 3
-  summonIcon: {fileID: 0}
+  summonIcon: {fileID: 21300000, guid: d83755e8cde47554299c4d0bc826a5d6, type: 3}
+  enhanceSummonIcon: {fileID: 21300000, guid: 10a1c3e529cb6214f843c7682f12a99f, type: 3}

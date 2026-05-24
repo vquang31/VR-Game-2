@@ -24,9 +24,23 @@ public class ONNXShapePredictor : MonoBehaviour
     }
 
     //string[] labels = { "ellipse", "rectangle", "triangle" };
-
-    // Gọi hàm này để test
-    [ContextMenu("Run Prediction")]
+    private string[] labels = {
+        "circle",
+        "triangle",
+        "z",
+        "wave",
+        "star",
+        "alpha",
+        "beta",
+        "delta",
+        "phi",
+        "cronos",
+        "omega",
+        "zeta",
+        "sigma"
+    };
+// Gọi hàm này để test
+[ContextMenu("Run Prediction")]
     public Result RunPrediction(List<Vector2> v2)
     {
         Texture2D texture2D = ConvertToTexture2D(v2);
@@ -52,6 +66,7 @@ public class ONNXShapePredictor : MonoBehaviour
         // Get index and confidence
         int predictedIndex = 0;
         float maxConfidence = float.MinValue;
+        //Debug.Log(result.Length);
         for (int i = 0; i < result.Length; i++)
         {
             if (result[i] > maxConfidence)
@@ -60,7 +75,7 @@ public class ONNXShapePredictor : MonoBehaviour
                 predictedIndex = i;
             }
         }
-        Result gestureResult = new Result { GestureClass = predictedIndex.ToString(), Score = maxConfidence };
+        Result gestureResult = new Result { GestureClass = labels[predictedIndex].ToString(), Score = maxConfidence };
         Debug.Log($"Predicted class index: {predictedIndex} (confidence: {maxConfidence:0.000})");
         // Dispose
         //if (predictedIndex < labels.Length)

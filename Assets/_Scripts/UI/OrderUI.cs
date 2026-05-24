@@ -6,7 +6,6 @@ using System.Collections.Generic;
 public class OrderUI : NewMonoBehaviour
 {
     private Order order;
-    [SerializeField] private GameObject orderItemPrefab;
 
     [SerializeField] private TextMeshProUGUI orderNameText;
     [SerializeField] private GameObject gridLayoutItemGroup;
@@ -26,7 +25,7 @@ public class OrderUI : NewMonoBehaviour
         orderNameText.text = "";
         foreach (Transform child in gridLayoutItemGroup.transform)
         {
-            Destroy(child.gameObject);
+            child.gameObject.SetActive(false);  // Disable thay vì Destroy
         }
     }
     public void SetOrderInformation(Order order)
@@ -34,9 +33,20 @@ public class OrderUI : NewMonoBehaviour
         Reset();
         orderNameText.text = "Order-" + order.orderId.ToString();
 
-        foreach (var item in order.items)
+        int i = 1;
+        for (; i <= 5; i++)
         {
-            GameObject itemGO = Instantiate(orderItemPrefab, gridLayoutItemGroup.transform);
+            GameObject itemGO = gridLayoutItemGroup.transform.Find("Item" + i.ToString()).gameObject;
+            // Debug.Log(itemGO.name);
+            // GameObject itemGO = Instantiate(orderItemPrefab, gridLayoutItemGroup.transform);
+            if (i > order.items.Count)
+            {
+                // Debug.Log(i);
+                itemGO.SetActive(false);
+                continue;
+            }
+            itemGO.SetActive(true);
+            Item item = order.items[i - 1];
             SetInformation(item, itemGO);
         }
     }
@@ -49,7 +59,7 @@ public class OrderUI : NewMonoBehaviour
         // GameObject itemMagicIcon3GO = itemGO.transform.Find("MagicIcon3_Image").gameObject;
 
         List<GameObject> itemMagicIconGOs = new();
-        for (int j = 1; j <= 3; j++)
+        for (int j = 1; j <= ConstGame.MAX_ENHANCEMENT_LEVEL + 1; j++)
         {
             // string s =
             GameObject gameObject = itemGO.transform.Find("MagicIcon" + j.ToString() + "_Image").gameObject;
@@ -71,12 +81,15 @@ public class OrderUI : NewMonoBehaviour
         {
             itemMagicIconGOs[i].GetComponent<Image>().sprite = enhancementMagicDatas[i].magicIcon;
         }
+
         itemMagicIconGOs[i].GetComponent<Image>().sprite = summonMagicData.magicIcon;
 
         i++;
-        for (; i <= ConstGame.MAX_ENHANCEMENT_LEVEL + 1; i++)
+        // Debug.Log(i);
+        for (; i <= ConstGame.MAX_ENHANCEMENT_LEVEL; i++)
         {
-            itemMagicIconGOs[i].SetActive(false);
+            // Debug.Log(i);
+            itemMagicIconGOs[i].GetComponent<Image>().enabled = false;
         }
 
     }

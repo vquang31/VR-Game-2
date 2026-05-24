@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AlphaMagic
   m_EditorClassIdentifier: Assembly-CSharp::EnhancementMagicData
   magicName: Alpha Enhance
-  magicIcon: {fileID: 0}
-  description: 
+  magicIcon: {fileID: 21300000, guid: 66b74450a9dd9154dadbf6ee06a3e9ca, type: 3}
+  description: Size Enhancement
   duration: 0
   cooldown: 0
-  shape: 7
+  shape: 5
   enhancementType: 0

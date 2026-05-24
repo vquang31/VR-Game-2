@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundFXMananger : Singleton<SoundFXMananger>
+public class SoundFXManager : Singleton<SoundFXManager>
 {
     [SerializeField]
     private AudioClip[] _audioClips;
@@ -49,4 +50,41 @@ public class SoundFXMananger : Singleton<SoundFXMananger>
 
         Destroy(soundFXGameObject, destroyTime);
     }
+
+    public void PlaySoundFX(string nameSound, Transform spawnTransform)
+    {
+        List<AudioClip> validClips = new();
+
+        if (_audioClips == null || _audioClips.Length == 0)
+        {
+            Debug.LogError("SFXManager: AudioClips not loaded!!!");
+        }
+
+
+        for (int i = 0; i < _audioClips.Length; i++)
+        {
+            if (_audioClips[i].name.ToLowerInvariant().Contains(nameSound.ToLowerInvariant()))
+            {
+                validClips.Add(_audioClips[i]);
+            }
+        }
+        if (validClips.Count == 0)
+        {
+            Debug.LogWarning("No sound clips found with the name: " + nameSound);
+            return;
+        }
+
+        int count = validClips.Count;
+        int randomIndex = Random.Range(0, count);
+
+        int index = System.Array.IndexOf(_audioClips, validClips[randomIndex]);
+
+        PlaySoundFX(index, spawnTransform);
+
+    }
+    public void PlaySoundClick()
+    {
+        PlaySoundFX(0, transform); // Assuming the click sound is at index 0 in the _audioClips array
+    }
+
 }

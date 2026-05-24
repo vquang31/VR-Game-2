@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acf7dcbc57b73f448ee5ebfa05379c4, type: 3}
   m_Name: PhiMagic
   m_EditorClassIdentifier: Assembly-CSharp::EnhancementMagicData
-  magicName: 
-  magicIcon: {fileID: 0}
-  description: 
+  magicName: Phi Magic
+  magicIcon: {fileID: 21300000, guid: 59cbf4ec1b2366e4fa35bdf05d8f534d, type: 3}
+  description: Dark dark
   duration: 0
   cooldown: 0
-  shape: 0
-  enhancementType: 0
+  shape: 8
+  enhancementType: 3

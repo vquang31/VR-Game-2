@@ -40,6 +40,13 @@ public class DrawWithRay : NewMonoBehaviour
 
     void Update()
     {
+        if(Player.Instance.canDraw == false)
+        {
+            if (currentLine != null)
+                Destroy(currentLine.gameObject);
+            currentLine = null;
+            return;
+        }
         float triggerValue = triggerAction.action.ReadValue<float>();
 
         if (triggerValue > 0.1f)
@@ -96,16 +103,18 @@ public class DrawWithRay : NewMonoBehaviour
         CastStatus ct = Player.Instance.Cast(gestureResult);
         if(ct == CastStatus.Failed)
         {
+            SoundFXManager.Instance.PlaySoundFX("reduce", transform);
             UIGameManager.Instance.ShowAnnouncement(ConstUI.announcementFailCast, ConstUI.durationAnnouncement);
         }
         else if(ct == CastStatus.Cooldown)
         {
+            SoundFXManager.Instance.PlaySoundFX("buff", transform);
             UIGameManager.Instance.ShowAnnouncement(ConstUI.announcementOnCooldown, ConstUI.durationAnnouncement);
         }
         else if(ct == CastStatus.Success)
         {
-
-    }
+            SoundFXManager.Instance.PlaySoundFX("buff", transform);
+        }
         StartCoroutine(SpawnVFX(currentLine, ct));
         //Destroy(LineManager.Instance.line);
         if (currentLine != null)

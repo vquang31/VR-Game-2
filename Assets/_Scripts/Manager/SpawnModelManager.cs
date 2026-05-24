@@ -1,17 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnModelManager : Singleton<SpawnModelManager>
 {
-    [SerializeField]
-    private Transform spawnItemAndCartPosition;
-
 
     [SerializeField]
-    private Transform spawnOrderPosition;
-
-    [SerializeField]
-    private Transform spawnGenerateItemPosition;
+    private List<Transform> spawnItemPosition;
 
 
 
@@ -19,7 +14,7 @@ public class SpawnModelManager : Singleton<SpawnModelManager>
     {
         GameObject modelPrefabGO = MagicManager.Instance.GetItemModel(item);
         GameObject itemModel = ObjectPoolManager.Instance.Spawn(modelPrefabGO);
-        itemModel.transform.position = spawnGenerateItemPosition.position;
+        itemModel.transform.position = spawnItemPosition[Random.Range(0, spawnItemPosition.Count)].position;
 
         // clear VFX, add new VFX
         // clear old VFX
@@ -32,12 +27,11 @@ public class SpawnModelManager : Singleton<SpawnModelManager>
         StartCoroutine(DespawnItem(itemModel, ConstGame.SPAWN_ITEM_MODEL_DURATION));
         return itemModel;
     }
-    
 
-    public void SpawnItemToCart(Item item,GameObject gameObject)
+
+    public void SpawnItemToCart(Item item, GameObject gameObject)
     {
-        gameObject.transform.position = spawnItemAndCartPosition.position;
-
+        gameObject.transform.position = spawnItemPosition[Random.Range(0, spawnItemPosition.Count)].position;
 
         ResetVFXItem(item, gameObject);
 

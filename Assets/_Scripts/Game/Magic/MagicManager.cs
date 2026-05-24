@@ -93,4 +93,36 @@ public class MagicManager : Singleton<MagicManager>
         }
     }
 
+
+    public Sprite GetIconItem(Item item)
+    {
+        SummonMagicData summonMagicData = MagicPool.Instance.magicDataList
+            .OfType<SummonMagicData>()
+            .FirstOrDefault(m => m.itemType == item.itemType);
+        if (item.enhancements.Contains(EnhancementType.Exchange))
+        {
+            return summonMagicData.enhanceSummonIcon;
+        }
+        else
+        {
+            return summonMagicData.summonIcon;
+        }
+    }
+
+
+    public Sprite GetEnhancementMagicSprite(EnhancementType enhancementType)
+    {
+        EnhancementMagicData enhancementMagicData = MagicPool.Instance.magicDataList
+            .OfType<EnhancementMagicData>()
+            .FirstOrDefault(m => m.enhancementType == enhancementType);
+        if (enhancementMagicData != null)
+        {
+            return enhancementMagicData.magicIcon;
+        }
+        else
+        {
+            Debug.LogWarning($"No EnhancementMagicData found for EnhancementType: {enhancementType}");
+            return null;
+        }
+    }
 }

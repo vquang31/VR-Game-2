@@ -12,6 +12,11 @@ public class UIManager : Singleton<UIManager>
 
     [SerializeField]
     private GameObject endGameUI;
+
+
+    [SerializeField]
+    private GameObject endLevelUI;
+
     protected override void LoadComponents()
     {
         base.LoadComponents();
@@ -26,6 +31,7 @@ public class UIManager : Singleton<UIManager>
         HidePauseMenuAndResumeGame();
         HideSettingMenu();
         HidePanelEndGame();
+        HidePanelEndLevel();
     }
 
 
@@ -63,7 +69,15 @@ public class UIManager : Singleton<UIManager>
         settingMenuUI?.SetActive(false);
     }
 
+    public void HidePanelEndLevel()
+    {
+        endLevelUI.SetActive(false);
+    }
 
+    public void ShowPanelEndLevel()
+    {
+        endLevelUI.SetActive(true);
+    }
 
 
 }

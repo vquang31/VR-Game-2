@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: SummonPotionMagic
   m_EditorClassIdentifier: Assembly-CSharp::SummonMagicData
   magicName: Summon Potion
-  magicIcon: {fileID: 21300000, guid: bd36033deef695a4abaf8e4986748428, type: 3}
-  description: 
+  magicIcon: {fileID: 21300000, guid: da5a55a859a676545b6206da36b21bf6, type: 3}
+  description: 'Summon HP Potion or a mana Potion '
   duration: 0
   cooldown: 0
-  shape: 2
+  shape: 0
   summonPrefab: {fileID: 3274106386985570630, guid: df243d789b2c5d2458a63cfc4a5272da, type: 3}
   enhanceSummonPrefab: {fileID: 1575401318058450652, guid: c951eb594d1c8e7428b7150ca94881d9, type: 3}
   itemType: 2
-  summonIcon: {fileID: 0}
+  summonIcon: {fileID: 21300000, guid: 2b04bd1c49fe2f442a86fae5b33c72b2, type: 3}
+  enhanceSummonIcon: {fileID: 21300000, guid: 240793e3a17c4c545b1c858bd997d713, type: 3}

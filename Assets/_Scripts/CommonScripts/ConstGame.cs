@@ -5,13 +5,23 @@ public class ConstGame
 {
     public const float MIN_GESTURE_SCORE = 0.8f;
 
+    public const int SPAWN_ORDER_PER_WAVE = 3;
+    public const int WAVE_PER_LEVEL = 4;
+    public const float TIME_PER_WAVE = 180f;
+    public const int MAX_ORDER = 5;
+    public const int TUTORIAL_LEVEL = 3;
+
+    public const int SCORE_PER_ORDER_PER_VALUE = 1;
     public const float REMAINING_TIME_ORDER = 1000f;
 
     public const int MAX_INVENTORY_SIZE = 20;
     public const int MAX_QUANTITY_PER_ORDER = 5;
-    public const int MAX_ENHANCEMENT_LEVEL = 2;
+    public const int MAX_ENHANCEMENT_LEVEL = 4;
 
     public const float SPAWN_ITEM_MODEL_DURATION = 10f;
+
+
+
     public static int MIN_ITEM_VALUE
     {
         get
@@ -119,8 +129,8 @@ public class ConstGame
         { ItemType.Potion, 100 },
         { ItemType.Shield, 100 },
         { ItemType.Sword, 100 },
-        { ItemType.Bow, 120 },
-        { ItemType.Halberd, 120 },
+        { ItemType.Bow, 250 },
+        { ItemType.Halberd, 250 },
     };
 
     public static Dictionary<EnhancementType, int> enhancementValues = new()

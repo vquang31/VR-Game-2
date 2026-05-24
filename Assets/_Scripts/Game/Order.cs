@@ -2,28 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Order 
+[System.Serializable]
+public class Order
 {
     public int orderId;
-    public float remainingTime = 100f; 
+    //public float remainingTime = 100f; 
     public List<Item> items = new();
-
-
-
-
 
     public int OrderId
     {
         get
         {
-            return orderId; 
-        }
-    }
-    public float RemainingTime 
-    {
-        get
-        {
-            return remainingTime; 
+            return orderId;
         }
     }
     public int TotalValue
@@ -46,10 +36,15 @@ public class Order
 
     }
 
-    public Order(int orderId, int totalValue, float remainTime)
+    public Order(List<Item> items)
+    {
+        this.items = items;
+    }
+
+    public Order(int orderId, int totalValue)
     {
         this.orderId = orderId;
-        this.remainingTime = remainTime;
+        //this.remainingTime = remainTime;
 
         int totalItem = Random.Range(1, ConstGame.MAX_QUANTITY_PER_ORDER + 1);
         int minValue = ConstGame.MIN_ITEM_VALUE;
@@ -58,7 +53,7 @@ public class Order
         while (attempt < 100 && count < totalItem && totalValue >= minValue)
         {
             attempt++;
-            int maxValue = Mathf.Min(100, totalValue); //test 
+            int maxValue = Mathf.Max(100, totalValue); //test 
             int itemValue = Random.Range(minValue, maxValue + 1);
 
             if (itemValue >= totalValue)
@@ -72,19 +67,19 @@ public class Order
 
         }
     }
-    public void UpdateRemainingTime(float deltaTime)
-    {
-        remainingTime -= deltaTime;
-        if (remainingTime < 0)
-        {
-            remainingTime = 0;
-            // end Game
-        }
-    }
+    //public void UpdateRemainingTime(float deltaTime)
+    //{
+    //    remainingTime -= deltaTime;
+    //    if (remainingTime < 0)
+    //    {
+    //        remainingTime = 0;
+    //        // end Game
+    //    }
+    //}
 
     public void AddItem(Item item)
     {
-        if(item== null)
+        if (item == null)
         {
             Debug.LogError("Cannot add null item to order");
             return;
@@ -93,17 +88,42 @@ public class Order
     }
 
 
+    //public bool IsSameOrder(Order order)
+    //{
+    //    if(order == null) return false;
+    //    if(items.Count != order.items.Count)
+    //    {
+    //        return false;
+    //    }
+    //    if (order.items.Count == 0) return false;
+    //    for (int i = 0; i < items.Count; i++)
+    //    {
+
+    //        if (!items[i].IsSameItem(order.items[i]))
+    //        {
+    //            return false;
+    //        }
+    //    }
+    //    return true;
+    //}
     public bool IsSameOrder(Order order)
     {
-        for (int i = 0; i < items.Count; i++)
+        if (order == null) return false;
+        if (items.Count != order.items.Count) return false;
+        if (items.Count == 0) return false;
+
+        // Tạo bản sao danh sách item của order kia
+        var otherItems = new List<Item>(order.items);
+
+        foreach (var item in items)
         {
-            if (!items[i].IsSameItem(order.items[i]))
-            {
-                return false;
-            }
+            // Tìm item tương ứng trong otherItems
+            int idx = otherItems.FindIndex(x => x.IsSameItem(item));
+            if (idx == -1)
+                return false; // Không tìm thấy item tương ứng
+            otherItems.RemoveAt(idx); // Loại bỏ để tránh trùng lặp
         }
         return true;
     }
-
 
 }

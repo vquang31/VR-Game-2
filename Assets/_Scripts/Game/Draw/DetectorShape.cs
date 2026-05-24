@@ -13,27 +13,34 @@ public class DetectorShape : Singleton<DetectorShape>
 {
     private List<Gesture> trainingSet = new();
 
+    public bool useONNXPredictor = true;    
 
     private ONNXShapePredictor onnxPredictor;
     protected override void LoadComponents()
     {
         base.LoadComponents();
 
+        // my link to the dataset: Assets/_Resources/DataDetect
         //Load pre-made gestures
         //TextAsset[] gesturesXml = Resources.LoadAll<TextAsset>("GestureSet/10-stylus-MEDIUM/");
-        //foreach (TextAsset gestureXml in gesturesXml)
-        //    trainingSet.Add(GestureIO.ReadGestureFromXML(gestureXml.text));
+        TextAsset[] gesturesXml = Resources.LoadAll<TextAsset>("DataDetect");
+
+        foreach (TextAsset gestureXml in gesturesXml)
+            trainingSet.Add(GestureIO.ReadGestureFromXML(gestureXml.text));
+
+
         onnxPredictor = GetComponent<ONNXShapePredictor>();
         //Load user custom gestures
-        string[] filePaths = Directory.GetFiles(Application.persistentDataPath, "*.xml");
-        foreach (string filePath in filePaths)
-            trainingSet.Add(GestureIO.ReadGestureFromFile(filePath));
+        //string[] filePaths = Directory.GetFiles(Application.persistentDataPath, "*.xml");
+        //foreach (string filePath in filePaths)
+        //    trainingSet.Add(GestureIO.ReadGestureFromFile(filePath));
     }
     public Result DetectShape(LineRenderer line)
     {
         List<Vector2> v2 = LineRendererToVector2(line);
         // Run prediction
-        //return onnxPredictor.RunPrediction(v2);
+        if(useONNXPredictor)
+            return onnxPredictor.RunPrediction(v2);
 
         ///
         Result gestureResult = new();
@@ -47,7 +54,7 @@ public class DetectorShape : Singleton<DetectorShape>
         Gesture candidate = new(points.ToArray());
         gestureResult = PointCloudRecognizer.Classify(candidate, trainingSet.ToArray());
 
-        Debug.Log(gestureResult.GestureClass + " " + gestureResult.Score);
+        //Debug.Log(gestureResult.GestureClass + " " + gestureResult.Score);
 
         return gestureResult;
     }
@@ -129,36 +136,41 @@ public class DetectorShape : Singleton<DetectorShape>
     {
         if (string.IsNullOrEmpty(shape))
             return Shape.Unknown;
-        return shapeToMagic.TryGetValue(shape, out var magicName) ? magicName : Shape.Unknown;
+        return shapeToMagic.TryGetValue(shape.ToLower(), out var magicName) ? magicName : Shape.Unknown;
     }
     public enum Shape
     {
-        Star,
-        Triangle,
         Circle,
+        Triangle,
         Z,
-        V,
-        Time,
+        Star,
         Wave,
-        S,
         Alpha,
         Beta,
         Delta,
         Phi,
+        Cronos,
+        Omega,
+        Zeta,
+        Sigma,
         Unknown
     }
 
     public static Dictionary<string, Shape> shapeToMagic = new()
     {
-        { "Wave", Shape.Wave},
-        { "Triangle", Shape.Triangle },
-        { "Circle", Shape.Circle },
-
-        { "Z", Shape.Z},
-        { "Time", Shape.Time },
-
-        { "Star", Shape.Star },
-        { "S", Shape.S },
+        { "circle", Shape.Circle },
+        { "triangle", Shape.Triangle },
+        { "z", Shape.Z},
+        { "wave", Shape.Wave},
+        { "star", Shape.Star },
+        { "alpha", Shape.Alpha },
+        { "beta", Shape.Beta },
+        { "delta", Shape.Delta },
+        { "phi", Shape.Phi },
+        { "cronos", Shape.Cronos },
+        { "omega", Shape.Omega },
+        { "zeta", Shape.Zeta },
+        { "sigma", Shape.Sigma },
     };
     //List<Vector2> GetNormalizedPoints(LineRenderer line)
     //{

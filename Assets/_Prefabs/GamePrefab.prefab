@@ -288,6 +288,7 @@ MonoBehaviour:
   pauseMenuUI: {fileID: 6091421789205295998}
   settingMenuUI: {fileID: 3313488782912685134}
   endGameUI: {fileID: 2512841323441326937}
+  endLevelUI: {fileID: 0}
 --- !u!1 &1916732595383663988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,6 +1122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 363014a2f46f7904d802f6fc8c15c649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  canDraw: 1
+  cart: []
   activeEnhancementMagic: 
   inventory: []
 --- !u!1 &6905168303631946622
@@ -1168,7 +1171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b162d9b559686a24cbf15fe134f4c13e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MagicManager
-  MagicList: []
+  magicList: []
 --- !u!1 &7008685008546552858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1413,6 +1416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   IsIniting: 0
   IsGameOver: 0
+  directionLight: {fileID: 0}
 --- !u!1 &7271363112459327680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1700,6 +1704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c8c32984eda1540a81a5d96f12cba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DetectorShape
+  useONNXPredictor: 1
 --- !u!114 &5189096445987455304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4756,15 +4761,15 @@ PrefabInstance:
       objectReference: {fileID: 6997469667362663717, guid: d81977a2b1c742741870cae24f16a00d, type: 3}
     - target: {fileID: 4060250897418410025, guid: 4b914cf12a64fab49af05f2d7565c50c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.21619
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4060250897418410025, guid: 4b914cf12a64fab49af05f2d7565c50c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4060250897418410025, guid: 4b914cf12a64fab49af05f2d7565c50c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.78682
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4060250897418410025, guid: 4b914cf12a64fab49af05f2d7565c50c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4794,6 +4799,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7341404837468553184, guid: 4b914cf12a64fab49af05f2d7565c50c, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: f4fdfb09e62b8e3418ecc3f363c2aa39, type: 3}
+    - target: {fileID: 7341404837468553184, guid: 4b914cf12a64fab49af05f2d7565c50c, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: 34621002a99897a49ac79799a721a96e, type: 2}
     - target: {fileID: 7634170822179859704, guid: 4b914cf12a64fab49af05f2d7565c50c, type: 3}
       propertyPath: m_Name
       value: GeneralSceneManager

@@ -18,7 +18,7 @@ public class BaseButton : NewMonoBehaviour
 
     protected virtual void OnClick()
     {
-
+        SoundFXManager.Instance.PlaySoundClick();
     }
 
 }

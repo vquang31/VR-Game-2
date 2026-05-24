@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: SummonShieldMagic
   m_EditorClassIdentifier: Assembly-CSharp::SummonMagicData
   magicName: Summon Shield
-  magicIcon: {fileID: 21300000, guid: e8a94c8ad490447419efeea728add4dd, type: 3}
-  description: 
+  magicIcon: {fileID: 21300000, guid: a145aa1e4a8d18f4aae21eda3a7e709e, type: 3}
+  description: Summon a shield or a bigger Shield
   duration: 0
   cooldown: 0
   shape: 1
   summonPrefab: {fileID: 4423807887608842220, guid: 335521455f10ab14ebfd7f93fd149b12, type: 3}
   enhanceSummonPrefab: {fileID: 7907682598309374645, guid: c9e7f55029a7b6943bd9beff7d32279d, type: 3}
   itemType: 1
-  summonIcon: {fileID: 0}
+  summonIcon: {fileID: 21300000, guid: 2eaf5d5513b00b2478b71cfdb3dca986, type: 3}
+  enhanceSummonIcon: {fileID: 21300000, guid: f0f97cafb7297194dbc21fd72cb97f96, type: 3}

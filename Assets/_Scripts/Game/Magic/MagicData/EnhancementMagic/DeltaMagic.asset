@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acf7dcbc57b73f448ee5ebfa05379c4, type: 3}
   m_Name: DeltaMagic
   m_EditorClassIdentifier: Assembly-CSharp::EnhancementMagicData
-  magicName: 
-  magicIcon: {fileID: 0}
-  description: 
+  magicName: Delta Magic
+  magicIcon: {fileID: 21300000, guid: 97fe852a409e8b9499c41fa2ac0e37ad, type: 3}
+  description: Divine Aura
   duration: 0
   cooldown: 0
-  shape: 0
-  enhancementType: 0
+  shape: 7
+  enhancementType: 2

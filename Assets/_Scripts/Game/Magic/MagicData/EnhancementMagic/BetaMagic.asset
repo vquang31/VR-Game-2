@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acf7dcbc57b73f448ee5ebfa05379c4, type: 3}
   m_Name: BetaMagic
   m_EditorClassIdentifier: Assembly-CSharp::EnhancementMagicData
-  magicName: 
-  magicIcon: {fileID: 0}
-  description: 
+  magicName: Beta Magic
+  magicIcon: {fileID: 21300000, guid: c3ca89c45df5b484fb0175bff011422e, type: 3}
+  description: 'Item Exchange '
   duration: 0
   cooldown: 0
-  shape: 0
-  enhancementType: 0
+  shape: 6
+  enhancementType: 1

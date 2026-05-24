@@ -5,18 +5,28 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
+
+[System.Serializable]
+public class ItemGame
+{
+    public Item item;
+    public GameObject gameObject;
+}
+
 public class Player : Singleton<Player>
 {
-    public Dictionary<Item, GameObject> cart = new();
+    public bool canDraw = true;
+    public List<ItemGame> cart = new();
 
     public List<EnhancementType> activeEnhancementMagic = new();
 
     //private bool SummonMode = false;
 
-    public Dictionary<Item, GameObject> inventory = new();
+    public List<ItemGame> inventory = new();
 
     public CastStatus Cast(Result gestureResult)
     {
+
         DetectorShape.Shape shape = DetectorShape.LabelToShape(gestureResult.GestureClass);
         Debug.Log($"Shape: {gestureResult.GestureClass} ,gesture: {shape} -- score: {gestureResult.Score}");
         if (gestureResult.Score < ConstGame.MIN_GESTURE_SCORE)
@@ -45,12 +55,18 @@ public class Player : Singleton<Player>
                 //enhancementMagic.ApplyEnhancement(this);
                 //enhancementMagic.ApplyEnhancement(this);
                 if (!activeEnhancementMagic.Contains(enhancementMagic.EnhancementType))
+                {
                     activeEnhancementMagic.Add(enhancementMagic.EnhancementType);
+                    UIEnhanceManager.Instance.UpdateUI();
+                }
                 break;
             case SummonMagic summonMagic:
                 /// Summon item and add to inventory
                 Item item = ItemFactory.CreateItem(summonMagic);
                 item.ApplyEnhancement(activeEnhancementMagic);
+                UIGameManager.Instance.ShowAnnouncement($"Summoned {item.itemType} with enhancements: {string.Join(", ", item.enhancements)}", ConstUI.durationAnnouncement);
+                activeEnhancementMagic.Clear(); // Clear enhancement after use
+                UIEnhanceManager.Instance.UpdateUI();
                 AddItemToInventory(item);
                 break;
             default:
@@ -65,42 +81,128 @@ public class Player : Singleton<Player>
     public void AddItemToInventory(Item item)
     {
         GameObject itemModel = SpawnModelManager.Instance.SpawnItemModel(item);
-        inventory.Add(item, itemModel);
+        inventory.Add(new ItemGame { item = item, gameObject = itemModel });
+        // Update UI Inventory
+        UIInventoryManager.Instance.UpdateInventoryUI();
     }
 
 
-
-    public Item itemTest;
-    [ContextMenu("Add Item To Cast Test")]
-    public void AddItemToCastTest()
+    public void ToggleSelectItem(int index)
     {
-        AddItemToCart(itemTest);
-    }
-
-    [ContextMenu("Remove Item To Cast Test")]
-    public void RemoveItemToCastTest()
-    {
-        RemoveItemToCart(itemTest);
-    }
-
-
-    public void AddItemToCart(Item item)
-    {
-        cart.Add(item, inventory[item]);
-        // Spawn Model + VFX
-        GameObject itemModel = inventory[item];
-        SpawnModelManager.Instance.SpawnItemToCart(item, itemModel);
-    }
-
-    public void RemoveItemToCart(Item item)
-    {
-        if (cart.ContainsKey(item))
+        if (index < 0 || index >= inventory.Count)
         {
-            GameObject itemModel = cart[item];
-            cart.Remove(item);
-            SpawnModelManager.Instance.DespawnItem(itemModel);
+            //Debug.LogError("Invalid inventory index");
+            return;
+        }
+        ItemGame itemGame = inventory[index];
+        if (cart.Contains(itemGame))
+        {
+            RemoveItemFromCart(itemGame);
+        }
+        else
+        {
+            AddItemToCart(itemGame);
+
         }
     }
+
+
+    public void AddItemToCart(ItemGame itemGame)
+    {
+        cart.Add(itemGame);
+        // Spawn Model + VFX
+        GameObject itemModel = itemGame.gameObject;
+        SpawnModelManager.Instance.SpawnItemToCart(itemGame.item, itemModel);
+        UIInventoryManager.Instance.HighlightInventoryItem(itemGame.item);
+        UICartManager.Instance.UpdateCartUI();
+        UITableOrderManager.Instance.UpdateUI();
+    }
+
+
+
+    // Check hiệu năng và GC --optimize
+    public void DeliveryItems()
+    {
+        Order order = new Order(cart.Select(itemGame => itemGame.item).ToList());
+        bool success = OrderManager.Instance.DeliveryOrder(order);
+        if (success)
+        {
+            RemoveItemInInventory();
+
+        }
+    }
+
+    public void RemoveItemFromCart(int index)
+    {
+        if (index < 0 || index >= cart.Count)
+        {
+            //Debug.LogError("Invalid cart index");
+            return;
+        }
+        ItemGame itemGame = cart[index];
+        RemoveItemFromCart(itemGame);
+    }
+
+
+    public void RemoveItemFromCart(ItemGame itemGame)
+    {
+        if (cart.Contains(itemGame))
+        {
+            GameObject itemModel = itemGame.gameObject;
+            cart.Remove(itemGame);
+            SpawnModelManager.Instance.DespawnItem(itemModel);
+            UIInventoryManager.Instance.ResetHighlightInventoryItem(itemGame.item);
+            UICartManager.Instance.UpdateCartUI();
+            UITableOrderManager.Instance.UpdateUI();
+        }
+    }
+
+
+
+
+    /// <summary>
+    /// remove item from inventory and cart, despawn model, reset highlight, update UI
+    /// </summary>
+    public void RemoveItemInInventory()
+    {
+        foreach (var itemGame in cart)
+        {
+            RemoveItemFromInventory(itemGame.item);
+        }
+        cart.Clear();
+        UIInventoryManager.Instance.ResetHighlightAllInventoryItems();
+        UIInventoryManager.Instance.UpdateInventoryUI();
+        UITableOrderManager.Instance.UpdateUI();
+        UICartManager.Instance.UpdateCartUI();
+        //int count = cart.Count;
+        //for (int i = count - 1; i >= 0; i--)
+        //{
+        //    ItemGame itemGame = cart[i];
+        //    RemoveItemFromInventory(itemGame.item);
+        //    //RemoveItemFromCart(itemGame);
+        //}
+        //cart.Clear();
+        //UIInventoryManager.Instance.ResetHighlightAllInventoryItems();
+        //UIInventoryManager.Instance.UpdateInventoryUI();
+        //UITableOrderManager.Instance.UpdateUI();
+        //UICartManager.Instance.UpdateCartUI();
+    }
+    private void RemoveItemFromInventory(Item item)
+    {
+        //Debug.Log($"Remove item from inventory: {item}");
+        ItemGame itemGame = inventory.FirstOrDefault(ig => ig.item == item);
+        if (itemGame != null)
+        {
+            inventory.Remove(itemGame);
+            SpawnModelManager.Instance.DespawnItem(itemGame.gameObject);
+            // Update UI Inventory
+            UIInventoryManager.Instance.UpdateInventoryUI();
+            UICartManager.Instance.UpdateCartUI();
+        }
+    }
+
+
+
 
 }
 

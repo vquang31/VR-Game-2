@@ -26,10 +26,9 @@ public class OrderTimeline : Singleton<OrderTimeline>
     }
 
 
-    public void UpdateUI()
-    {
-
-    }
+    //public void UpdateUI()
+    //{
+    //}
 
 
 }
